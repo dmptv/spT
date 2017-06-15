@@ -16,6 +16,13 @@
 		0F19C3521ED43A4F00DE3EEA /* ProgressBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F19C3511ED43A4F00DE3EEA /* ProgressBarCell.swift */; };
 		0F19C3541ED4496D00DE3EEA /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F19C3531ED4496D00DE3EEA /* Extentions.swift */; };
 		0F19C3561ED5C6CF00DE3EEA /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F19C3551ED5C6CF00DE3EEA /* SettingsController.swift */; };
+		0F19C35B1ED5D00E00DE3EEA /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F19C35A1ED5D00E00DE3EEA /* SettingsCell.swift */; };
+		0F1D74701EF1625B00C27DB0 /* ProfileTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1D746F1EF1625B00C27DB0 /* ProfileTime.swift */; };
+		0F1D74B31EF28AFE00C27DB0 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1D74B21EF28AFE00C27DB0 /* StopWatch.swift */; };
+		0F2CB5291EE6CF0500FF0400 /* ExpandedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2CB5281EE6CF0500FF0400 /* ExpandedCell.swift */; };
+		0F5E71761EDAAED60038BF04 /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5E71751EDAAED60038BF04 /* InfoCell.swift */; };
+		0F94713A1EF03D9500CB25E1 /* TotalTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9471391EF03D9500CB25E1 /* TotalTimeCell.swift */; };
+		0F94713C1EF03DE900CB25E1 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F94713B1EF03DE900CB25E1 /* ButtonCell.swift */; };
 		0FD9A1431EB77D9A00997135 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD9A1421EB77D9A00997135 /* AppDelegate.swift */; };
 		0FD9A1481EB77D9A00997135 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FD9A1461EB77D9A00997135 /* Main.storyboard */; };
 		0FD9A14A1EB77D9A00997135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD9A1491EB77D9A00997135 /* Assets.xcassets */; };
@@ -40,6 +47,13 @@
 		0F19C3511ED43A4F00DE3EEA /* ProgressBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBarCell.swift; sourceTree = "<group>"; };
 		0F19C3531ED4496D00DE3EEA /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		0F19C3551ED5C6CF00DE3EEA /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		0F19C35A1ED5D00E00DE3EEA /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		0F1D746F1EF1625B00C27DB0 /* ProfileTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTime.swift; sourceTree = "<group>"; };
+		0F1D74B21EF28AFE00C27DB0 /* StopWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
+		0F2CB5281EE6CF0500FF0400 /* ExpandedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedCell.swift; sourceTree = "<group>"; };
+		0F5E71751EDAAED60038BF04 /* InfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCell.swift; path = ../InfoCell.swift; sourceTree = "<group>"; };
+		0F9471391EF03D9500CB25E1 /* TotalTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalTimeCell.swift; sourceTree = "<group>"; };
+		0F94713B1EF03DE900CB25E1 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		0FD9A13F1EB77D9A00997135 /* SportTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD9A1421EB77D9A00997135 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0FD9A1471EB77D9A00997135 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,21 +92,23 @@
 			name = CircularProgressBar;
 			sourceTree = "<group>";
 		};
-		0F19C3571ED5C6D700DE3EEA /* Controller */ = {
+		0F19C3571ED5C6D700DE3EEA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0F19C3551ED5C6CF00DE3EEA /* SettingsController.swift */,
+				0F19C35A1ED5D00E00DE3EEA /* SettingsCell.swift */,
+				0F2CB56B1EE986BA00FF0400 /* Inner cells */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		0F19C3581ED5C6E200DE3EEA /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				0F19C3041ED31ED800DE3EEA /* HomeController.swift */,
-				0F19C3551ED5C6CF00DE3EEA /* SettingsController.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		0F19C3581ED5C6E200DE3EEA /* View */ = {
-			isa = PBXGroup;
-			children = (
 				0F19C3511ED43A4F00DE3EEA /* ProgressBarCell.swift */,
 			);
-			name = View;
+			name = Home;
 			sourceTree = "<group>";
 		};
 		0F19C3591ED5C6ED00DE3EEA /* Extentions */ = {
@@ -101,6 +117,26 @@
 				0F19C3531ED4496D00DE3EEA /* Extentions.swift */,
 			);
 			name = Extentions;
+			sourceTree = "<group>";
+		};
+		0F1D74711EF1626200C27DB0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0F1D746F1EF1625B00C27DB0 /* ProfileTime.swift */,
+				0F1D74B21EF28AFE00C27DB0 /* StopWatch.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		0F2CB56B1EE986BA00FF0400 /* Inner cells */ = {
+			isa = PBXGroup;
+			children = (
+				0F5E71751EDAAED60038BF04 /* InfoCell.swift */,
+				0F2CB5281EE6CF0500FF0400 /* ExpandedCell.swift */,
+				0F9471391EF03D9500CB25E1 /* TotalTimeCell.swift */,
+				0F94713B1EF03DE900CB25E1 /* ButtonCell.swift */,
+			);
+			name = "Inner cells";
 			sourceTree = "<group>";
 		};
 		0FD9A1361EB77D9A00997135 = {
@@ -123,8 +159,9 @@
 			isa = PBXGroup;
 			children = (
 				0FD9A1421EB77D9A00997135 /* AppDelegate.swift */,
-				0F19C3571ED5C6D700DE3EEA /* Controller */,
-				0F19C3581ED5C6E200DE3EEA /* View */,
+				0F1D74711EF1626200C27DB0 /* Model */,
+				0F19C3571ED5C6D700DE3EEA /* Settings */,
+				0F19C3581ED5C6E200DE3EEA /* Home */,
 				0F19C3591ED5C6ED00DE3EEA /* Extentions */,
 				0FD9A1491EB77D9A00997135 /* Assets.xcassets */,
 				0F19C3501ED3F1F100DE3EEA /* CircularProgressBar */,
@@ -209,16 +246,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F1D74B31EF28AFE00C27DB0 /* StopWatch.swift in Sources */,
 				0F19C3051ED31ED800DE3EEA /* HomeController.swift in Sources */,
 				0F19C34C1ED3F1DF00DE3EEA /* MCNewCustomLayeredView.m in Sources */,
 				0F19C3521ED43A4F00DE3EEA /* ProgressBarCell.swift in Sources */,
+				0F2CB5291EE6CF0500FF0400 /* ExpandedCell.swift in Sources */,
 				0F19C34E1ED3F1DF00DE3EEA /* MCSliceLayer.m in Sources */,
 				0FD9A1431EB77D9A00997135 /* AppDelegate.swift in Sources */,
+				0F5E71761EDAAED60038BF04 /* InfoCell.swift in Sources */,
+				0F94713A1EF03D9500CB25E1 /* TotalTimeCell.swift in Sources */,
+				0F94713C1EF03DE900CB25E1 /* ButtonCell.swift in Sources */,
 				0F19C34F1ED3F1DF00DE3EEA /* MCUtil.m in Sources */,
 				0F19C3561ED5C6CF00DE3EEA /* SettingsController.swift in Sources */,
 				0F19C34B1ED3F1DF00DE3EEA /* MCNewCustomLayer.m in Sources */,
+				0F1D74701EF1625B00C27DB0 /* ProfileTime.swift in Sources */,
 				0F19C34D1ED3F1DF00DE3EEA /* MCPercentageDoughnutView.m in Sources */,
 				0F19C3541ED4496D00DE3EEA /* Extentions.swift in Sources */,
+				0F19C35B1ED5D00E00DE3EEA /* SettingsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

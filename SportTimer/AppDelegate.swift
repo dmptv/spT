@@ -22,8 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let layout = UICollectionViewFlowLayout()
         window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
         
-        UINavigationBar.appearance().barTintColor = UIColor.brown
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // изм цвет barButtonItems и кнопки -  Back
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().barTintColor = .brown
+
+        
+        if let barFont = UIFont(name: "Avenir-Light", size: 22.0) {
+            // изм шрифт и цвет title
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: barFont]
+        }
         
         return true
     }

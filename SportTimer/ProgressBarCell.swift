@@ -11,7 +11,8 @@ import UIKit
 class ProgressBarCell: UICollectionViewCell {
 
     var rightConstant: CGFloat = 0.0
-    
+    weak var delegate: ProgressBarCellDelegate?
+
     let timeContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .lightGray
@@ -48,14 +49,14 @@ class ProgressBarCell: UICollectionViewCell {
     
     let percentageDoughnut: MCPercentageDoughnutView = {
         let view = MCPercentageDoughnutView(frame: .zero)
-        view.percentage = 0.5
+        view.initialPercentage = 0.0
         view.showTextLabel = true
         view.textLabel.text = "Percentage"
         return view
     }()
     
     let startButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(frame: .zero)
         button.layer.cornerRadius = 16
         button.setTitle("Start", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -65,7 +66,7 @@ class ProgressBarCell: UICollectionViewCell {
     }()
     
     let resetButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(frame: .zero)
         button.layer.cornerRadius = 16
         button.setTitle("Reset", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -105,6 +106,18 @@ class ProgressBarCell: UICollectionViewCell {
         _ = startButton.anchor(top: percentageDoughnut.bottomAnchor, left: timeContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: rightConstant, heightConstant: 32)
         
         _ = resetButton.anchor(top: percentageDoughnut.bottomAnchor, left: nil, bottom: nil, right: timeContainerView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: rightConstant, heightConstant: 32)
+        
+        // Старт и ресет таймера
+        startButton.addTarget(self, action: #selector(handleStart), for: .touchUpInside)
+        resetButton.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
+    }
+    
+    func handleStart(button: UIButton) {
+        delegate?.handelStartAction(sender: percentageDoughnut, button: button)
+    }
+    
+    func handleReset(button: UIButton) {
+        delegate?.handleResetAction(sender: percentageDoughnut, button: button)
     }
     
     required init?(coder aDecoder: NSCoder) {
