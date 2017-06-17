@@ -18,22 +18,38 @@ private let reuseIdentifier = "Cell"
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MCPercentageDoughnutViewDelegate, ProgressBarCellDelegate {
     
+    
     var persentageView: MCPercentageDoughnutView?
     var timer = Timer()
     var startStopButton: UIButton!
     var timeToTimer: CGFloat = 60.0
     
-    var profileTime: ProfileTime? {
-        didSet {
-            
-        }
+    let notificationName = Notification.Name(rawValue: profileTimeChanged)
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
+    var profileTime: ProfileTime? {
+        didSet {
+            print(" home vc now equals == \(String(describing: profileTime))")
+        }
+    }
+     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupCollectionView()
         setupNavBar()
+        
+        createObserver()
+    }
+    
+    func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateProfileTime(notification:)), name: notificationName, object: profileTime)
+    }
+    
+    func updateProfileTime(notification: NSNotification) {
+        profileTime = notification.object as? ProfileTime
     }
     
     fileprivate func setupCollectionView() {

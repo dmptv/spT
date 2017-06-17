@@ -12,13 +12,18 @@ protocol CustomCellProtocol: class {
     func handleExpandCollapsNextCell()
 }
 
+let profileTimeChanged = "ak.freelance.changedProfileTime "
+
 class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CustomCellProtocol, UITextFieldDelegate {
     
     let rowsNumber = 9
     let rowOfItemToExpand = 7
     var isShowCell = false
+    var totalTime = "0"
+    var profileTime: ProfileTime?
+    var indexPathForTotalTime: IndexPath!
     
-    var profileTime: ProfileTime!
+    weak var homeController: HomeController?
     
     fileprivate let infoCellId = "infoCellId"
     fileprivate let totalTimeCellId = "totalTimeCellId"
@@ -38,6 +43,8 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         super.init(frame: frame)
         
         // TO DO - потом при ините тексфилды будут заполняться из Кор Даты
+        
+        profileTime = ProfileTime()
         
         setupViews()
     }
@@ -67,17 +74,6 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     
-    // MARK: - Habdles
-    
-    // Save
-    func handleSave(button: UIButton) {
-        let homeController = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
-        HomeController.profileTime = profileTime
-        navigationController?.popViewController(homeController, animated: true)
-    }
-    
-
-    
     //MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rowsNumber
@@ -85,7 +81,6 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var identifier: String
-        
         switch indexPath.item {
         case 0:
             identifier = totalTimeCellId
@@ -97,23 +92,20 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             identifier = infoCellId
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
-        
-        setUpElementsOfRow(identifier: identifier, cell: cell, indexPath: indexPath)
-        
+        setElementsOfRow(identifier: identifier, cell: cell, indexPath: indexPath)
         return cell
     }
     
-    func setUpElementsOfRow(identifier: String, cell: UICollectionViewCell, indexPath: IndexPath) {
+    func setElementsOfRow(identifier: String, cell: UICollectionViewCell, indexPath: IndexPath) {
         if identifier == totalTimeCellId {
             let cell = cell as! TotalTimeCell
             
-            // TO DO: - create func to count total time
-            cell.totalTimeLabel.text = "0m:0sec"
-            
-            //  var meters: Double = 10
-            //  let text = "Моя длина \(meters * 3.28) фута"
+            guard let total = profileTime?.totalTime else {return}
+            totalTime = String(format: "%.0f", total)
+            cell.totalTimeLabel.text = totalTime
+            indexPathForTotalTime = indexPath
         }
-
+        
         // TO DO: - перенести это в класс ячейки , а здесь вызвать функцию у cell
         if identifier == infoCellId {
             let cell = cell as! InfoCell
@@ -141,14 +133,15 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             }
         }
         
-        if identifier == buttonCellId {
+        switch identifier {
+        case buttonCellId:
             let cell = cell as! ButtonCell
             cell.saveButton.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        }
-        
-        if identifier == expandedCellId {
+        case expandedCellId:
             let cell = cell as! ExpandedCell
             cell.delegate = self
+        default:
+            break
         }
         
         // Hide cell under expanded
@@ -157,8 +150,6 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         }
     }
 
-
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
@@ -186,36 +177,49 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         
         // TO DO - сделать валидацию строк - чтобы сюда заходили только цифры и не больше 600
         
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        profileTime = ProfileTime()
+        let validatingNumber = castFromStringToInt(str: string)
         
-        if let timeText = textField.text {
-            switch textField.tag {
-            case 1:
-                profileTime.round = timeText
-            case 2:
-                profileTime.rest = timeText
-            case 3:
-                profileTime.warmUp = timeText
-            case 4:
-                profileTime.coolDown = timeText
-            case 5:
-                profileTime.number = timeText
-            default:
-                break
-            }
+        if validatingNumber >= 600.0 {
+            return false
         }
         
-        print((profileTime.round * profileTime.number) + (profileTime.rest * (profileTime.number - 1)) + profileTime.coolDown + profileTime.warmUp)
+        switch textField.tag {
+        case 1:
+            profileTime?.round = string
+        case 2:
+            profileTime?.rest = string
+        case 3:
+            profileTime?.warmUp = string
+        case 4:
+            profileTime?.coolDown = string
+        case 5:
+            profileTime?.number = string
+        default:
+            break
+        }
+        
+        //  Общее время
+        if let rounStr = profileTime?.round, let restStr = profileTime?.rest, let warmUpStr = profileTime?.warmUp, let coolDownStr = profileTime?.coolDown, let numberStr = profileTime?.number {
+            let roundFloat = castFromStringToInt(str: rounStr)
+            let restFloat = castFromStringToInt(str: restStr)
+            let warmUpFloat = castFromStringToInt(str: warmUpStr)
+            let coolDownFloat = castFromStringToInt(str: coolDownStr)
+            let numberFloat = castFromStringToInt(str: numberStr)
+            profileTime?.totalTime = ((roundFloat + restFloat) * numberFloat) + warmUpFloat + coolDownFloat
+            if let tempTotalTime = profileTime?.totalTime {
+                totalTime =  String(format: "%.0f", tempTotalTime)
+                settingsCollectionView.reloadItems(at: [indexPathForTotalTime])
+            }
+            
+        }
+        
+        return true
     }
     
     func castFromStringToInt(str: String) -> CGFloat {
         return CGFloat((str as NSString).floatValue)
     }
-    
+
     //MARK: - ExpandCellProtocol
     func handleExpandCollapsNextCell() {
         
@@ -228,6 +232,25 @@ class SettingsCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         }) { (bool) in
             self.settingsCollectionView.scrollToItem(at: IndexPath(item: self.rowsNumber - 1, section: 0), at: [], animated: true)
         }
+    }
+    
+    // Save
+    func handleSave(button: UIButton) {
+        UIView.animate(withDuration: 0.5, animations: {
+            button.backgroundColor = UIColor(white: 125/255, alpha: 0.5)
+        }) { (bool) in
+            button.backgroundColor = .black
+        }
+        
+        // TO DO - почему то сохраянеются только последняя введеная инфа из тексфилда. Надо все сохранять или ставить дефолтное 0
+        
+        if let round = profileTime?.round, let rest = profileTime?.rest, let coolDown = profileTime?.coolDown, let warmUp = profileTime?.warmUp, let number = profileTime?.number {
+            print(round, rest, coolDown, warmUp, number)
+        }
+        
+        // Broadcast profileTime via notification to homeCVC
+        let notificationName = Notification.Name(rawValue: profileTimeChanged)
+        NotificationCenter.default.post(name: notificationName, object: profileTime)
     }
     
     required init?(coder aDecoder: NSCoder) {
